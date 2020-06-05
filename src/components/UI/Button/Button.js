@@ -16,7 +16,6 @@ const StyledButton = styled.button`
 
   :disabled {
     background-color: grey;
-    border: 1px solid grey;
   }
 `;
 

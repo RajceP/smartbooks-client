@@ -2,7 +2,7 @@ import React from 'react';
 
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
-import Edit from './components/Edit/Edit';
+import Form from './components/Form/Form';
 import Books from './containers/Books/Books';
 import Dashboard from './containers/Dashboard/Dashboard';
 import Employees from './containers/Employees/Employees';
@@ -20,7 +20,7 @@ const App = () => {
             <Route path="/" component={Dashboard} exact />
             <Route path="/books" component={Books} />
             <Route path="/employees" component={Employees} />
-            <Route path="/edit/:id" component={Edit} />
+            <Route path="/form/:type/:id" component={Form} />
           </Switch>
         </Layout>
       </Theme>

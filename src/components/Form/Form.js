@@ -7,6 +7,7 @@ import axios from '../../api/axios-smartbooks';
 import Button from '../UI/Button/Button';
 import Input from '../UI/Input/Input';
 
+// Styled Components
 const Wrap = styled.div`
   margin: 0 auto;
   width: 90%;
@@ -26,31 +27,34 @@ const ButtonCont = styled.div`
   }
 `;
 
-const Edit = () => {
-  const [book, setBook] = useState(null);
-  const [bookForm, setBookForm] = useState(null);
+// Main functional component handling forms in
+const Form = () => {
+  const [state, setState] = useState(null);
+  const [form, setForm] = useState(null);
 
-  const { id } = useParams();
+  const { type, id } = useParams();
   const history = useHistory();
 
+  // Use effect hook fetching data from API.
   useEffect(() => {
     axios
-      .get(`/books/${id}`)
+      .get(`/${type}/${id}`)
       .then((response) => {
-        setBook(response.data[0]);
+        setState(response.data[0]);
       })
       .catch((_error) => {});
-  }, [id]);
+  }, [id, type]);
 
-  const handleChange = (event, inputIdentifier) => {
+  // Handler taking care of updating state according to form.
+  const changeHandler = (event, inputIdentifier) => {
     const updatedOrderForm = {
-      ...bookForm.bookFormSchema,
+      ...form.formSchema,
     };
     const updatedFormElement = {
       ...updatedOrderForm[inputIdentifier],
     };
     updatedFormElement.value = event.target.value;
-    updatedFormElement.valid = checkValidity(
+    updatedFormElement.valid = validityCheckHandler(
       updatedFormElement.value,
       updatedFormElement.validation,
     );
@@ -64,10 +68,11 @@ const Edit = () => {
       }
     }
 
-    setBookForm({ bookFormSchema: updatedOrderForm, formIsValid });
+    setForm({ formSchema: updatedOrderForm, formIsValid });
   };
 
-  const checkValidity = (value, rules) => {
+  // Function taking care of input validity check
+  const validityCheckHandler = (value, rules) => {
     let isValid = true;
     if (!rules) {
       return true;
@@ -98,33 +103,33 @@ const Edit = () => {
     return isValid;
   };
 
-  const updateBook = (event) => {
+  // Handler taking care of final PUT request updating actual database.
+  const updateHandler = (event) => {
     event.preventDefault();
-
     const formData = {};
-    for (const formElementIdentifier in bookForm.bookFormSchema) {
-      if ({}.hasOwnProperty.call(bookForm.bookFormSchema, formElementIdentifier)) {
-        formData[formElementIdentifier] = bookForm.bookFormSchema[formElementIdentifier].value;
+
+    for (const formElementIdentifier in form.formSchema) {
+      if ({}.hasOwnProperty.call(form.formSchema, formElementIdentifier)) {
+        formData[formElementIdentifier] = form.formSchema[formElementIdentifier].value;
       }
     }
 
-    axios.put(`/books/${book._id}`, formData).then((_response) => {
+    axios.put(`/${type}/${state._id}`, formData).then((_response) => {
       history.goBack();
     });
   };
 
-  let form = <p>Loading...</p>;
-
-  if (book && !bookForm) {
-    setBookForm({
-      bookFormSchema: {
+  // TODO: Move these out of this component and prepare new clear form.
+  if (state && !form && type === 'books') {
+    setForm({
+      formSchema: {
         isbn: {
           elementType: 'input',
           elementConfig: {
             type: 'text',
             placeholder: 'ISBN',
           },
-          value: book.isbn,
+          value: state.isbn,
           validation: {
             required: true,
             isNumeric: true,
@@ -138,7 +143,7 @@ const Edit = () => {
             type: 'text',
             placeholder: 'Title',
           },
-          value: book.title,
+          value: state.title,
           validation: {
             required: true,
           },
@@ -151,7 +156,7 @@ const Edit = () => {
             type: 'text',
             placeholder: 'Subtitle',
           },
-          value: book.subtitle,
+          value: state.subtitle,
           validation: {
             required: true,
           },
@@ -164,7 +169,7 @@ const Edit = () => {
             type: 'text',
             placeholder: 'Author',
           },
-          value: book.author,
+          value: state.author,
           validation: {
             required: true,
           },
@@ -177,7 +182,7 @@ const Edit = () => {
             type: 'date',
             placeholder: 'Published',
           },
-          value: book.published.split('T')[0],
+          value: state.published.split('T')[0],
           validation: {
             required: true,
           },
@@ -190,7 +195,7 @@ const Edit = () => {
             type: 'text',
             placeholder: 'Publisher',
           },
-          value: book.publisher,
+          value: state.publisher,
           validation: {
             required: true,
           },
@@ -203,20 +208,85 @@ const Edit = () => {
     });
   }
 
-  if (book && bookForm) {
+  if (state && !form && type === 'employees') {
+    setForm({
+      formSchema: {
+        name: {
+          elementType: 'input',
+          elementConfig: {
+            type: 'text',
+            placeholder: 'Name',
+          },
+          value: state.name,
+          validation: {
+            required: true,
+            isNumeric: true,
+          },
+          valid: true,
+          touched: false,
+        },
+        age: {
+          elementType: 'input',
+          elementConfig: {
+            type: 'number',
+            placeholder: 'Age',
+          },
+          value: state.age,
+          validation: {
+            required: true,
+          },
+          valid: true,
+          touched: false,
+        },
+        address: {
+          elementType: 'address',
+          elementConfig: {
+            type: 'text',
+            placeholder: 'Address',
+          },
+          value: state.address,
+          validation: {
+            required: true,
+          },
+          valid: true,
+          touched: false,
+        },
+        phone: {
+          elementType: 'input',
+          elementConfig: {
+            type: 'text',
+            placeholder: 'Phone',
+          },
+          value: state.phone,
+          validation: {
+            required: true,
+          },
+          valid: true,
+          touched: false,
+        },
+      },
+      formIsvalid: true,
+      loading: false,
+    });
+  }
+
+  let formOutput = <p>Loading...</p>;
+
+  // Prepare schema to output.
+  if (state && form) {
     const formElementsArray = [];
 
-    for (const key in bookForm.bookFormSchema) {
-      if ({}.hasOwnProperty.call(bookForm.bookFormSchema, key)) {
+    for (const key in form.formSchema) {
+      if ({}.hasOwnProperty.call(form.formSchema, key)) {
         formElementsArray.push({
           id: key,
-          config: bookForm.bookFormSchema[key],
+          config: form.formSchema[key],
         });
       }
     }
 
-    form = (
-      <form onSubmit={updateBook}>
+    formOutput = (
+      <form onSubmit={updateHandler}>
         {formElementsArray.map(({ id: elementId, config }) => (
           <Input
             key={elementId}
@@ -226,7 +296,7 @@ const Edit = () => {
             invalid={!config.valid}
             shouldValidate={config.validation}
             touched={config.touched}
-            changed={(event) => handleChange(event, elementId)}
+            changed={(event) => changeHandler(event, elementId)}
           />
         ))}
         <ButtonCont>
@@ -239,7 +309,7 @@ const Edit = () => {
           >
             Back
           </Button>
-          <Button buttonType="submit" buttonDisabled={!bookForm.formIsValid}>
+          <Button buttonType="submit" buttonDisabled={!form.formIsValid}>
             Save
           </Button>
         </ButtonCont>
@@ -247,7 +317,8 @@ const Edit = () => {
     );
   }
 
-  return <Wrap>{form}</Wrap>;
+  // Final render.
+  return <Wrap>{formOutput}</Wrap>;
 };
 
-export default Edit;
+export default Form;

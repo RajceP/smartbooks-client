@@ -45,7 +45,7 @@ const Books = () => {
   };
 
   const handleEdit = (row) => {
-    history.push(`/edit/${row._id}`);
+    history.push(`/form/books/${row._id}`);
   };
 
   const handleDelete = (row) => {
