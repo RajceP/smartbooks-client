@@ -1,0 +1,22 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Chrome",
+      "type": "chrome",
+      "preLaunchTask": "npm: start",
+      "postDebugTask": "npm stop",
+      "request": "launch",
+      "userDataDir": true,
+      "url": "http://localhost:3000",
+      "webRoot": "${workspaceFolder}/src",
+      "sourceMapPathOverrides": {
+        "/home/petr/dev/*": "/__vscode-remote-uri__/home/petr/dev/*"
+      }
+      // For Windows use:
+      // "sourceMapPathOverrides": {
+      //   "webpack:///src/*": "${webRoot}/*"
+      // }
+    }
+  ]
+}
