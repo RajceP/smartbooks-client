@@ -4,6 +4,7 @@ import { useHistory, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
 import axios from '../../api/axios-smartbooks';
+import useQuery from '../../hooks/useQuery';
 import Button from '../UI/Button/Button';
 import Input from '../UI/Input/Input';
 
@@ -27,13 +28,16 @@ const ButtonCont = styled.div`
   }
 `;
 
-// Main functional component handling forms in
+// Main functional component handling forms in application.
 const Form = () => {
   const [state, setState] = useState(null);
   const [form, setForm] = useState(null);
 
-  const { type, id } = useParams();
   const history = useHistory();
+  const query = useQuery();
+
+  const { type } = useParams();
+  const id = query.get('id');
 
   // Use effect hook fetching data from API.
   useEffect(() => {
@@ -114,12 +118,18 @@ const Form = () => {
       }
     }
 
-    axios.put(`/${type}/${state._id}`, formData).then((_response) => {
-      history.goBack();
-    });
+    if (id === 'new') {
+      axios.post(`/${type}`, formData).then((_response) => {
+        history.push(`/table/${type}`);
+      });
+    } else {
+      axios.put(`/${type}/${state._id}`, formData).then((_response) => {
+        history.push(`/table/${type}`);
+      });
+    }
   };
 
-  // TODO: Move these out of this component and prepare new clear form.
+  // TODO: Move these out of this component!
   if (state && !form && type === 'books') {
     setForm({
       formSchema: {
@@ -129,7 +139,7 @@ const Form = () => {
             type: 'text',
             placeholder: 'ISBN',
           },
-          value: state.isbn,
+          value: id === 'new' ? '' : state.isbn,
           validation: {
             required: true,
             isNumeric: true,
@@ -143,7 +153,7 @@ const Form = () => {
             type: 'text',
             placeholder: 'Title',
           },
-          value: state.title,
+          value: id === 'new' ? '' : state.title,
           validation: {
             required: true,
           },
@@ -156,7 +166,7 @@ const Form = () => {
             type: 'text',
             placeholder: 'Subtitle',
           },
-          value: state.subtitle,
+          value: id === 'new' ? '' : state.subtitle,
           validation: {
             required: true,
           },
@@ -169,7 +179,7 @@ const Form = () => {
             type: 'text',
             placeholder: 'Author',
           },
-          value: state.author,
+          value: id === 'new' ? '' : state.author,
           validation: {
             required: true,
           },
@@ -182,7 +192,7 @@ const Form = () => {
             type: 'date',
             placeholder: 'Published',
           },
-          value: state.published.split('T')[0],
+          value: id === 'new' ? '' : state.published.split('T')[0],
           validation: {
             required: true,
           },
@@ -195,7 +205,7 @@ const Form = () => {
             type: 'text',
             placeholder: 'Publisher',
           },
-          value: state.publisher,
+          value: id === 'new' ? '' : state.publisher,
           validation: {
             required: true,
           },
@@ -217,10 +227,9 @@ const Form = () => {
             type: 'text',
             placeholder: 'Name',
           },
-          value: state.name,
+          value: id === 'new' ? '' : state.name,
           validation: {
             required: true,
-            isNumeric: true,
           },
           valid: true,
           touched: false,
@@ -231,7 +240,7 @@ const Form = () => {
             type: 'number',
             placeholder: 'Age',
           },
-          value: state.age,
+          value: id === 'new' ? '' : state.age,
           validation: {
             required: true,
           },
@@ -244,7 +253,7 @@ const Form = () => {
             type: 'text',
             placeholder: 'Address',
           },
-          value: state.address,
+          value: id === 'new' ? '' : state.address,
           validation: {
             required: true,
           },
@@ -257,7 +266,7 @@ const Form = () => {
             type: 'text',
             placeholder: 'Phone',
           },
-          value: state.phone,
+          value: id === 'new' ? '' : state.phone,
           validation: {
             required: true,
           },

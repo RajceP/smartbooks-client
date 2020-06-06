@@ -1,5 +1,6 @@
 import React from 'react';
 
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 const StyledButton = styled.button`
@@ -25,6 +26,19 @@ const Button = ({ children, clicked, buttonType, buttonDisabled }) => {
       {children}
     </StyledButton>
   );
+};
+
+Button.defaultProps = {
+  buttonDisabled: false,
+  buttonType: 'button',
+  clicked: null,
+};
+
+Button.propTypes = {
+  buttonDisabled: PropTypes.bool,
+  buttonType: PropTypes.string,
+  children: PropTypes.node.isRequired,
+  clicked: PropTypes.func,
 };
 
 export default Button;

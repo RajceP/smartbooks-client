@@ -1,5 +1,7 @@
-import { NavLink } from 'react-router-dom';
 import React from 'react';
+
+import PropTypes from 'prop-types';
+import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 
 const StyledHeader = styled.div`
@@ -67,15 +69,19 @@ const Header = ({ children }) => {
             </StyledLink>
           </Li>
           <Li>
-            <StyledLink to="/books">Books</StyledLink>
+            <StyledLink to="/table/books">Books</StyledLink>
           </Li>
           <Li>
-            <StyledLink to="/employees">Employees</StyledLink>
+            <StyledLink to="/table/employees">Employees</StyledLink>
           </Li>
         </Ul>
       </Nav>
     </StyledHeader>
   );
+};
+
+Header.propTypes = {
+  children: PropTypes.node.isRequired,
 };
 
 export default Header;

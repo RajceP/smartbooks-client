@@ -3,9 +3,8 @@ import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import Form from './components/Form/Form';
-import Books from './containers/Books/Books';
 import Dashboard from './containers/Dashboard/Dashboard';
-import Employees from './containers/Employees/Employees';
+import Table from './containers/Table/Table';
 import Layout from './hoc/Layout/Layout';
 import GlobalStyle from './styles/Global';
 import Theme from './styles/Theme';
@@ -18,9 +17,9 @@ const App = () => {
         <Layout>
           <Switch>
             <Route path="/" component={Dashboard} exact />
-            <Route path="/books" component={Books} />
-            <Route path="/employees" component={Employees} />
-            <Route path="/form/:type/:id" component={Form} />
+            <Route path="/table/:type" component={Table} />
+            <Route path="/form/:type" component={Form} />
+            <Route render={() => <p>Jejda, tady nic nenajdeš!</p>} />
           </Switch>
         </Layout>
       </Theme>

@@ -22,7 +22,7 @@ const StyledTable = styled.table`
   }
 `;
 
-const Table = ({ columns, data }) => {
+const TableSkeleton = ({ columns, data }) => {
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = useTable({
     columns,
     data,
@@ -55,4 +55,4 @@ const Table = ({ columns, data }) => {
   );
 };
 
-export default Table;
+export default TableSkeleton;
