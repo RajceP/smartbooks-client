@@ -29,7 +29,7 @@ const ButtonCont = styled.div`
 `;
 
 // Main functional component handling forms in application.
-const Form = () => {
+const Form = ({ login, register, handleLogin }) => {
   const [state, setState] = useState(null);
   const [form, setForm] = useState(null);
 
@@ -41,13 +41,15 @@ const Form = () => {
 
   // Use effect hook fetching data from API.
   useEffect(() => {
-    axios
-      .get(`/${type}/${id}`)
-      .then((response) => {
-        setState(response.data[0]);
-      })
-      .catch((_error) => {});
-  }, [id, type]);
+    if (!login && !register && id !== 'new') {
+      axios
+        .get(`/${type}/${id}`)
+        .then((response) => {
+          setState(response.data[0]);
+        })
+        .catch((_error) => {});
+    }
+  }, [id, type, login, register]);
 
   // Handler taking care of updating state according to form.
   const changeHandler = (event, inputIdentifier) => {
@@ -130,7 +132,7 @@ const Form = () => {
   };
 
   // TODO: Move these out of this component!
-  if (state && !form && type === 'books') {
+  if ((state || id === 'new') && !form && type === 'books') {
     setForm({
       formSchema: {
         isbn: {
@@ -217,7 +219,7 @@ const Form = () => {
     });
   }
 
-  if (state && !form && type === 'employees') {
+  if ((state || id === 'new') && !form && type === 'employees') {
     setForm({
       formSchema: {
         name: {
@@ -277,10 +279,46 @@ const Form = () => {
     });
   }
 
+  if (login && !form) {
+    setForm({
+      formSchema: {
+        email: {
+          elementType: 'input',
+          elementConfig: {
+            type: 'email',
+            placeholder: 'Email',
+          },
+          value: '',
+          validation: {
+            required: true,
+            isEmail: true,
+          },
+          valid: false,
+          touched: false,
+        },
+        password: {
+          elementType: 'input',
+          elementConfig: {
+            type: 'password',
+            placeholder: 'Password',
+          },
+          value: '',
+          validation: {
+            required: true,
+            minLength: 5,
+          },
+          valid: false,
+          touched: false,
+        },
+      },
+      formIsvalid: false,
+    });
+  }
+
   let formOutput = <p>Loading...</p>;
 
   // Prepare schema to output.
-  if (state && form) {
+  if ((state || id === 'new' || login) && form) {
     const formElementsArray = [];
 
     for (const key in form.formSchema) {
@@ -293,7 +331,14 @@ const Form = () => {
     }
 
     formOutput = (
-      <form onSubmit={updateHandler}>
+      <form
+        onSubmit={
+          !login
+            ? updateHandler
+            : (event) =>
+                handleLogin(event, form.formSchema.email.value, form.formSchema.password.value)
+        }
+      >
         {formElementsArray.map(({ id: elementId, config }) => (
           <Input
             key={elementId}
@@ -307,17 +352,19 @@ const Form = () => {
           />
         ))}
         <ButtonCont>
-          <Button
-            buttonType="button"
-            clicked={(event) => {
-              event.preventDefault();
-              history.goBack();
-            }}
-          >
-            Back
-          </Button>
+          {!login && (
+            <Button
+              buttonType="button"
+              clicked={(event) => {
+                event.preventDefault();
+                history.goBack();
+              }}
+            >
+              Back
+            </Button>
+          )}
           <Button buttonType="submit" buttonDisabled={!form.formIsValid}>
-            Save
+            {login ? 'Login' : 'Save'}
           </Button>
         </ButtonCont>
       </form>

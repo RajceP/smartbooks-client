@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
 import PropTypes from 'prop-types';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
+
+import UserContext from '../../context/UserContext';
 
 const StyledHeader = styled.div`
   position: fixed;
@@ -16,9 +18,10 @@ const StyledHeader = styled.div`
   height: 50px;
   z-index: 90;
   background-color: ${({ theme: { colors } }) => colors.green};
+  box-shadow: ${({ theme }) => theme.shadow};
 
   @media ${({ theme: { mediaQueries } }) => mediaQueries.medium} {
-    justify-content: space-between;
+    justify-content: start;
   }
 `;
 
@@ -57,14 +60,40 @@ const StyledLink = styled(NavLink)`
   }
 `;
 
+const StyledLogInOut = styled.div`
+  cursor: pointer;
+
+  &.active {
+    text-decoration: underline;
+  }
+
+  @media (hover: hover) {
+    :hover {
+      color: ${({ theme: { colors } }) => colors.charcoal};
+    }
+  }
+`;
+
 const Header = ({ children }) => {
+  const { userData, setUserData } = useContext(UserContext);
+  const history = useHistory();
+
+  const handleLogout = () => {
+    setUserData({
+      toke: undefined,
+      user: undefined,
+      auth: false,
+    });
+    localStorage.setItem('x-auth-token', '');
+  };
+
   return (
     <StyledHeader>
       <StyledText>{children}</StyledText>
       <Nav>
         <Ul>
           <Li>
-            <StyledLink exact to="/">
+            <StyledLink exact to="/dashboard">
               Dashboard
             </StyledLink>
           </Li>
@@ -76,6 +105,19 @@ const Header = ({ children }) => {
           </Li>
         </Ul>
       </Nav>
+
+      <div style={{ marginLeft: 'auto' }} />
+      {userData.user ? (
+        <StyledLogInOut onClick={handleLogout}>Log Out</StyledLogInOut>
+      ) : (
+        <StyledLogInOut
+          onClick={() => {
+            history.push('login');
+          }}
+        >
+          Log In
+        </StyledLogInOut>
+      )}
     </StyledHeader>
   );
 };

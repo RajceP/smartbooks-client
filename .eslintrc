@@ -9,6 +9,10 @@
   },
   "extends": ["airbnb", "airbnb/hooks", "prettier", "prettier/react"],
   "plugins": ["prettier"],
+  "globals": {
+    "localStorage": true,
+    "fetch": true
+  },
   "rules": {
     "react/jsx-filename-extension": [
       1,
