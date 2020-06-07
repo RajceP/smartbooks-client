@@ -144,7 +144,7 @@ const Form = () => {
             required: true,
             isNumeric: true,
           },
-          valid: true,
+          valid: id !== 'new',
           touched: false,
         },
         title: {
@@ -157,7 +157,7 @@ const Form = () => {
           validation: {
             required: true,
           },
-          valid: true,
+          valid: id !== 'new',
           touched: false,
         },
         subtitle: {
@@ -170,7 +170,7 @@ const Form = () => {
           validation: {
             required: true,
           },
-          valid: true,
+          valid: id !== 'new',
           touched: false,
         },
         author: {
@@ -183,7 +183,7 @@ const Form = () => {
           validation: {
             required: true,
           },
-          valid: true,
+          valid: id !== 'new',
           touched: false,
         },
         published: {
@@ -196,7 +196,7 @@ const Form = () => {
           validation: {
             required: true,
           },
-          valid: true,
+          valid: id !== 'new',
           touched: false,
         },
         publisher: {
@@ -209,12 +209,11 @@ const Form = () => {
           validation: {
             required: true,
           },
-          valid: true,
+          valid: id !== 'new',
           touched: false,
         },
       },
-      formIsvalid: true,
-      loading: false,
+      formIsvalid: id !== 'new',
     });
   }
 
@@ -231,7 +230,7 @@ const Form = () => {
           validation: {
             required: true,
           },
-          valid: true,
+          valid: id !== 'new',
           touched: false,
         },
         age: {
@@ -244,7 +243,7 @@ const Form = () => {
           validation: {
             required: true,
           },
-          valid: true,
+          valid: id !== 'new',
           touched: false,
         },
         address: {
@@ -257,7 +256,7 @@ const Form = () => {
           validation: {
             required: true,
           },
-          valid: true,
+          valid: id !== 'new',
           touched: false,
         },
         phone: {
@@ -270,12 +269,11 @@ const Form = () => {
           validation: {
             required: true,
           },
-          valid: true,
+          valid: id !== 'new',
           touched: false,
         },
       },
-      formIsvalid: true,
-      loading: false,
+      formIsvalid: id !== 'new',
     });
   }
 

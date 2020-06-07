@@ -16,7 +16,8 @@ const StyledButton = styled.button`
   box-shadow: ${({ theme }) => theme.shadow};
 
   :disabled {
-    background-color: grey;
+    color: black;
+    background-color: lightgrey;
   }
 `;
 

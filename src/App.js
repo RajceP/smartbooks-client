@@ -2,6 +2,7 @@ import React from 'react';
 
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
+import Error from './components/Error/Error';
 import Form from './components/Form/Form';
 import Dashboard from './containers/Dashboard/Dashboard';
 import Table from './containers/Table/Table';
@@ -19,7 +20,7 @@ const App = () => {
             <Route path="/" component={Dashboard} exact />
             <Route path="/table/:type" component={Table} />
             <Route path="/form/:type" component={Form} />
-            <Route render={() => <p>Jejda, tady nic nenajdeš!</p>} />
+            <Route render={() => <Error>Ouch, nothing to see here...</Error>} />
           </Switch>
         </Layout>
       </Theme>

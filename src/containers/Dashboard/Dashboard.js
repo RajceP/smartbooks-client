@@ -3,6 +3,8 @@ import React from 'react';
 import moment from 'moment';
 import styled from 'styled-components';
 
+import Card from '../../components/Card/Card';
+
 const Wrap = styled.div`
   display: flex;
   flex-direction: row;
@@ -12,13 +14,15 @@ const Wrap = styled.div`
 
 const StyledDate = styled.h1``;
 
-const Dasboard = () => {
+const Dashboard = () => {
   const today = moment().format('LL');
   return (
     <Wrap>
-      <StyledDate>Today is {today}.</StyledDate>
+      <Card>
+        <StyledDate>Today is {today}.</StyledDate>
+      </Card>
     </Wrap>
   );
 };
 
-export default Dasboard;
+export default Dashboard;
