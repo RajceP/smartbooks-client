@@ -6,6 +6,10 @@ import styled from 'styled-components';
 
 import UserContext from '../../context/UserContext';
 
+const StyledFill = styled.div`
+  margin-left: auto;
+`;
+
 const StyledHeader = styled.div`
   position: fixed;
   display: flex;
@@ -90,33 +94,39 @@ const Header = ({ children }) => {
   return (
     <StyledHeader>
       <StyledText>{children}</StyledText>
-      <Nav>
-        <Ul>
-          <Li>
-            <StyledLink exact to="/dashboard">
-              Dashboard
-            </StyledLink>
-          </Li>
-          <Li>
-            <StyledLink to="/table/books">Books</StyledLink>
-          </Li>
-          <Li>
-            <StyledLink to="/table/employees">Employees</StyledLink>
-          </Li>
-        </Ul>
-      </Nav>
-
-      <div style={{ marginLeft: 'auto' }} />
       {userData.user ? (
-        <StyledLogInOut onClick={handleLogout}>Log Out</StyledLogInOut>
+        <>
+          <Nav>
+            <Ul>
+              <Li>
+                <StyledLink exact to="/dashboard">
+                  Dashboard
+                </StyledLink>
+              </Li>
+              <Li>
+                <StyledLink to="/table/books">Books</StyledLink>
+              </Li>
+              <Li>
+                <StyledLink to="/table/employees">Employees</StyledLink>
+              </Li>
+            </Ul>
+          </Nav>
+
+          <StyledFill />
+
+          <StyledLogInOut onClick={handleLogout}>Log Out</StyledLogInOut>
+        </>
       ) : (
-        <StyledLogInOut
-          onClick={() => {
-            history.push('login');
-          }}
-        >
-          Log In
-        </StyledLogInOut>
+        <>
+          <StyledFill />
+          <StyledLogInOut
+            onClick={() => {
+              history.push('login');
+            }}
+          >
+            Log In
+          </StyledLogInOut>
+        </>
       )}
     </StyledHeader>
   );

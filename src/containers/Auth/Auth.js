@@ -13,6 +13,7 @@ const ErrorMessage = styled.p`
   font-weight: bold;
 `;
 
+// TODO: registraition form!
 const Auth = () => {
   const [error, setError] = useState({ message: null });
   const { setUserData } = useContext(UserContext);
