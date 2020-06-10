@@ -13,14 +13,15 @@ const ErrorMessage = styled.p`
   font-weight: bold;
 `;
 
-// TODO: registraition form!
-const Auth = () => {
+const Auth = ({ type }) => {
   const [error, setError] = useState({ message: null });
   const { setUserData } = useContext(UserContext);
   const history = useHistory();
 
   const loginHandler = async (event, email, password) => {
-    event.preventDefault();
+    if (event) {
+      event.preventDefault();
+    }
 
     axios
       .post('/users/login', {
@@ -38,7 +39,32 @@ const Auth = () => {
       });
   };
 
-  const form = <Form login handleLogin={loginHandler} />;
+  const registrationHandle = async (event, email, password, username) => {
+    event.preventDefault();
+
+    axios
+      .post('/users/register', {
+        email,
+        password,
+        username,
+      })
+      .then((_response) => {
+        loginHandler(null, email, password);
+      })
+      .catch((e) => {
+        setError({ message: e.response.data.message });
+      });
+  };
+
+  let form = null;
+
+  if (type === 'login') {
+    form = <Form login handleLogin={loginHandler} />;
+  }
+
+  if (type === 'register') {
+    form = <Form register handleRegister={registrationHandle} />;
+  }
 
   return (
     <div>

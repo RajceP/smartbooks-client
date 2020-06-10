@@ -64,7 +64,8 @@ const StyledLink = styled(NavLink)`
   }
 `;
 
-const StyledLogInOut = styled.div`
+const StyledAuth = styled.div`
+  margin: 0 10px;
   cursor: pointer;
 
   &.active {
@@ -114,18 +115,25 @@ const Header = ({ children }) => {
 
           <StyledFill />
 
-          <StyledLogInOut onClick={handleLogout}>Log Out</StyledLogInOut>
+          <StyledAuth onClick={handleLogout}>Log Out</StyledAuth>
         </>
       ) : (
         <>
           <StyledFill />
-          <StyledLogInOut
+          <StyledAuth
+            onClick={() => {
+              history.push('register');
+            }}
+          >
+            Register
+          </StyledAuth>
+          <StyledAuth
             onClick={() => {
               history.push('login');
             }}
           >
             Log In
-          </StyledLogInOut>
+          </StyledAuth>
         </>
       )}
     </StyledHeader>

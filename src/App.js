@@ -61,7 +61,8 @@ const App = () => {
           <Layout>
             <Switch>
               <ProtectedRoute path="/" component={Dashboard} auth={userData.auth} exact />
-              <Route path="/login" component={Auth} />
+              <Route path="/login" render={(props) => <Auth {...props} type="login" />} />
+              <Route path="/register" render={(props) => <Auth {...props} type="register" />} />
               <ProtectedRoute path="/dashboard" component={Dashboard} auth={userData.auth} />
               <ProtectedRoute path="/table/:type" component={Table} auth={userData.auth} />
               <ProtectedRoute path="/form/:type" component={Form} auth={userData.auth} />
