@@ -3,10 +3,10 @@ import React, { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
-import axios from '../../api/axios-smartbooks';
-import useQuery from '../../hooks/useQuery';
-import Button from '../UI/Button/Button';
-import Input from '../UI/Input/Input';
+import axios from '../../../api/axios-smartbooks';
+import useQuery from '../../../hooks/useQuery';
+import Button from '../../UI/Button/Button';
+import Input from '../../UI/Input/Input';
 
 // Styled Components
 const Wrap = styled.div`
@@ -29,7 +29,7 @@ const ButtonCont = styled.div`
 `;
 
 // Main functional component handling forms in application.
-const Form = ({ login, register, handleLogin, handleRegister }) => {
+const Form = ({ login, register, handleLogin, handleRegister, match }) => {
   const [state, setState] = useState(null);
   const [form, setForm] = useState(null);
 
@@ -41,7 +41,6 @@ const Form = ({ login, register, handleLogin, handleRegister }) => {
 
   // Use effect hook fetching data from API.
   useEffect(() => {
-    setForm(null);
     if (!login && !register && id !== 'new') {
       axios
         .get(`/${type}/${id}`)
@@ -50,15 +49,19 @@ const Form = ({ login, register, handleLogin, handleRegister }) => {
         })
         .catch((_error) => {});
     }
-  }, [id, type, login, register]);
+
+    return () => {
+      setForm(null);
+    };
+  }, [id, type, login, register, match]);
 
   // Handler taking care of updating state according to form.
   const changeHandler = (event, inputIdentifier) => {
-    const updatedOrderForm = {
+    const updatedForm = {
       ...form.formSchema,
     };
     const updatedFormElement = {
-      ...updatedOrderForm[inputIdentifier],
+      ...updatedForm[inputIdentifier],
     };
     updatedFormElement.value = event.target.value;
     updatedFormElement.valid = validityCheckHandler(
@@ -66,16 +69,16 @@ const Form = ({ login, register, handleLogin, handleRegister }) => {
       updatedFormElement.validation,
     );
     updatedFormElement.touched = true;
-    updatedOrderForm[inputIdentifier] = updatedFormElement;
+    updatedForm[inputIdentifier] = updatedFormElement;
 
     let formIsValid = true;
-    for (const inputId in updatedOrderForm) {
-      if ({}.hasOwnProperty.call(updatedOrderForm, inputId)) {
-        formIsValid = updatedOrderForm[inputId].valid && formIsValid;
+    for (const inputId in updatedForm) {
+      if ({}.hasOwnProperty.call(updatedForm, inputId)) {
+        formIsValid = updatedForm[inputId].valid && formIsValid;
       }
     }
 
-    setForm({ formSchema: updatedOrderForm, formIsValid });
+    setForm({ formSchema: updatedForm, formIsValid });
   };
 
   // Function taking care of input validity check
@@ -216,7 +219,7 @@ const Form = ({ login, register, handleLogin, handleRegister }) => {
           touched: false,
         },
       },
-      formIsvalid: id !== 'new',
+      formIsValid: false,
     });
   }
 
@@ -276,7 +279,7 @@ const Form = ({ login, register, handleLogin, handleRegister }) => {
           touched: false,
         },
       },
-      formIsvalid: id !== 'new',
+      formIsValid: false,
     });
   }
 
@@ -312,7 +315,7 @@ const Form = ({ login, register, handleLogin, handleRegister }) => {
           touched: false,
         },
       },
-      formIsvalid: false,
+      formIsValid: false,
     });
   }
 
@@ -361,13 +364,30 @@ const Form = ({ login, register, handleLogin, handleRegister }) => {
           touched: false,
         },
       },
-      formIsvalid: false,
+      formIsValid: false,
     });
   }
 
   let formOutput = <p>Loading...</p>;
   let onSubmit = updateHandler;
   let buttonText = 'Save';
+
+  if (login) {
+    onSubmit = (event) =>
+      handleLogin(event, form.formSchema.email.value, form.formSchema.password.value);
+    buttonText = 'Login';
+  }
+
+  if (register) {
+    onSubmit = (event) =>
+      handleRegister(
+        event,
+        form.formSchema.email.value,
+        form.formSchema.password.value,
+        form.formSchema.username.value,
+      );
+    buttonText = 'Register';
+  }
 
   // Prepare schema to output.
   if ((state || id === 'new' || login || register) && form) {
@@ -380,23 +400,6 @@ const Form = ({ login, register, handleLogin, handleRegister }) => {
           config: form.formSchema[key],
         });
       }
-    }
-
-    if (login) {
-      onSubmit = (event) =>
-        handleLogin(event, form.formSchema.email.value, form.formSchema.password.value);
-      buttonText = 'Login';
-    }
-
-    if (register) {
-      onSubmit = (event) =>
-        handleRegister(
-          event,
-          form.formSchema.email.value,
-          form.formSchema.password.value,
-          form.formSchema.username.value,
-        );
-      buttonText = 'Register';
     }
 
     formOutput = (

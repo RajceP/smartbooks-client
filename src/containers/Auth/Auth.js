@@ -1,10 +1,10 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
 import axios, { setHeaders } from '../../api/axios-smartbooks';
-import Form from '../../components/Form/Form';
+import Form from '../../components/Forms/Form/Form';
 import UserContext from '../../context/UserContext';
 
 const ErrorMessage = styled.p`
@@ -13,10 +13,14 @@ const ErrorMessage = styled.p`
   font-weight: bold;
 `;
 
-const Auth = ({ type }) => {
+const Auth = ({ type, match }) => {
   const [error, setError] = useState({ message: null });
   const { setUserData } = useContext(UserContext);
   const history = useHistory();
+
+  useEffect(() => {
+    return () => setError({ message: null });
+  }, [match]);
 
   const loginHandler = async (event, email, password) => {
     if (event) {
