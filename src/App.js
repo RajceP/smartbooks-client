@@ -4,11 +4,11 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import axios, { setHeaders } from './api/axios-smartbooks';
 import Error from './components/Error/Error';
-import Form from './components/Forms/Form/Form';
+import Form from './components/Form/Form';
 import Auth from './containers/Auth/Auth';
 import Dashboard from './containers/Dashboard/Dashboard';
 import Table from './containers/Table/Table';
-import UserContext from './context/UserContext';
+import UserContext from './contexts/UserContext/UserContext';
 import Layout from './hoc/Layout/Layout';
 import ProtectedRoute from './hoc/ProtectedRoute/ProtectedRoute';
 import GlobalStyle from './styles/Global';

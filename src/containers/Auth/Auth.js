@@ -4,8 +4,8 @@ import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
 import axios, { setHeaders } from '../../api/axios-smartbooks';
-import Form from '../../components/Forms/Form/Form';
-import UserContext from '../../context/UserContext';
+import Form from '../../components/Form/Form';
+import UserContext from '../../contexts/UserContext/UserContext';
 
 const ErrorMessage = styled.p`
   text-align: center;

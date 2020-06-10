@@ -7,4 +7,8 @@ const formatDateTime = (inputDateTime) => {
   return `${day}.${month}.${year}`;
 };
 
-export { formatDateTime };
+const cloneObject = (object) => {
+  return JSON.parse(JSON.stringify(object));
+};
+
+export { cloneObject, formatDateTime };

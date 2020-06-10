@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { NavLink, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
-import UserContext from '../../context/UserContext';
+import UserContext from '../../contexts/UserContext/UserContext';
 
 const StyledFill = styled.div`
   margin-left: auto;

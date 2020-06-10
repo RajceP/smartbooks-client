@@ -14,10 +14,24 @@ const StyledButton = styled.button`
   font: inherit;
   cursor: pointer;
   box-shadow: ${({ theme }) => theme.shadow};
+  transition: all 150ms ease-out;
 
   :disabled {
     color: black;
     background-color: lightgrey;
+
+    @media (hover: hover) {
+      :hover {
+        cursor: not-allowed;
+        background-color: #a8a8a8;
+      }
+    }
+  }
+
+  @media (hover: hover) {
+    :hover {
+      background-color: #0c7c71;
+    }
   }
 `;
 
