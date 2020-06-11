@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const instance = axios.create({
-  baseURL: 'http://localhost:3002/',
+  baseURL: process.env.REACT_APP_API || 'http://localhost:3002/',
 });
 
 export const setHeaders = (token) => {
