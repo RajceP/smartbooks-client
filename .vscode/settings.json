@@ -15,21 +15,5 @@
     "titleBar.inactiveBackground": "#0f9b8e99",
     "titleBar.inactiveForeground": "#e7e7e799"
   },
-  "peacock.remoteColor": "#0F9B8E",
-  "sqltools.connections": [
-    {
-      "askForPassword": false,
-      "database": "cati2",
-      "driver": "MySQL",
-      "mysqlOptions": {
-        "authProtocol": "default"
-      },
-      "name": "cati2",
-      "password": "heslo",
-      "port": 3306,
-      "previewLimit": 50,
-      "server": "localhost",
-      "username": "root"
-    }
-  ]
+  "peacock.remoteColor": "#0F9B8E"
 }

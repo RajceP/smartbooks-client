@@ -4,13 +4,13 @@ import { useHistory, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
 import axios from '../../api/axios-smartbooks';
+import Button from '../../components/UI/Button/Button';
+import Input from '../../components/UI/Input/Input';
 import {
   bookSchema, employeesSchema, loginSchema, registrationSchema,
 } from '../../consts/FormsSchemas/FormsSchemas';
 import { cloneObject } from '../../helpers/Helpers';
 import useQuery from '../../hooks/useQuery';
-import Button from '../UI/Button/Button';
-import Input from '../UI/Input/Input';
 
 // Styled Components
 const Wrap = styled.div`
