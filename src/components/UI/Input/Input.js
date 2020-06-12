@@ -13,17 +13,10 @@ const StyledInput = styled.input`
   display: block;
   box-sizing: border-box;
 
-  ::placeholder {
-    /* Chrome, Firefox, Opera, Safari 10.1+ */
-    opacity: 1.5; /* Firefox */
-  }
-
   &.invalid {
     border-bottom: 1px solid red;
     ::placeholder {
-      /* Chrome, Firefox, Opera, Safari 10.1+ */
       color: red;
-      opacity: 1; /* Firefox */
     }
   }
 `;
