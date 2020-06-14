@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 
-import moment from 'moment';
 import { useHistory, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
-import axios from '../../api/axios-smartbooks';
-import DeleteButton from '../../assets/delete.png';
-import EditButton from '../../assets/edit.png';
-import TableSkeleton from '../../components/TableSkeleton/TableSkeleton';
-import Button from '../../components/UI/Button/Button';
+import axios from '../api/axios-smartbooks';
+import DeleteButton from '../assets/images/delete.png';
+import EditButton from '../assets/images/edit.png';
+import TableSkeleton from '../components/TableSkeleton';
+import Button from '../components/UI/Button/Button';
+import { bookTableSchema, employeesTableSchema } from '../utils/constants/TablesSchemas';
 
 const Wrap = styled.div`
   display: flex;
@@ -88,45 +88,11 @@ const Table = () => {
   ];
 
   if (type === 'books') {
-    columns = [
-      { Header: 'ISBN', accessor: 'isbn' },
-      {
-        Header: 'Title',
-        accessor: 'title',
-      },
-      {
-        Header: 'Author',
-        accessor: 'author',
-      },
-      {
-        Header: 'Published',
-        accessor: 'published',
-        Cell: ({ value }) => <>{moment(value).format('L')}</>,
-      },
-      ...columns,
-    ];
+    columns = [...bookTableSchema, ...columns];
   }
 
   if (type === 'employees') {
-    columns = [
-      {
-        Header: 'Name',
-        accessor: 'name',
-      },
-      {
-        Header: 'Age',
-        accessor: 'age',
-      },
-      {
-        Header: 'Address',
-        accessor: 'address',
-      },
-      {
-        Header: 'Phone',
-        accessor: 'phone',
-      },
-      ...columns,
-    ];
+    columns = [...employeesTableSchema, ...columns];
   }
 
   let tableOutput = <p>Loading...</p>;

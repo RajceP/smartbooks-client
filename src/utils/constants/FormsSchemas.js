@@ -1,4 +1,4 @@
-const bookSchema = {
+const bookFormSchema = {
   formSchema: {
     isbn: {
       elementType: 'input',
@@ -83,7 +83,7 @@ const bookSchema = {
   formIsValid: false,
 };
 
-const employeesSchema = {
+const employeesFormSchema = {
   formSchema: {
     name: {
       elementType: 'input',
@@ -141,7 +141,7 @@ const employeesSchema = {
   formIsValid: false,
 };
 
-const loginSchema = {
+const loginFormSchema = {
   formSchema: {
     email: {
       elementType: 'input',
@@ -175,7 +175,7 @@ const loginSchema = {
   formIsValid: false,
 };
 
-const registrationSchema = {
+const registrationFormSchema = {
   formSchema: {
     username: {
       elementType: 'input',
@@ -222,4 +222,4 @@ const registrationSchema = {
   formIsValid: false,
 };
 
-export { bookSchema, employeesSchema, loginSchema, registrationSchema };
+export { bookFormSchema, employeesFormSchema, loginFormSchema, registrationFormSchema };

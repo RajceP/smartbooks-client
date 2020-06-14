@@ -3,14 +3,14 @@ import React, { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
-import axios from '../../api/axios-smartbooks';
-import Button from '../../components/UI/Button/Button';
-import Input from '../../components/UI/Input/Input';
+import axios from '../api/axios-smartbooks';
+import Button from '../components/UI/Button/Button';
+import Input from '../components/UI/Input/Input';
 import {
-  bookSchema, employeesSchema, loginSchema, registrationSchema,
-} from '../../consts/FormsSchemas/FormsSchemas';
-import { cloneObject } from '../../helpers/Helpers';
-import useQuery from '../../hooks/useQuery';
+  bookFormSchema, employeesFormSchema, loginFormSchema, registrationFormSchema,
+} from '../utils/constants/FormsSchemas';
+import { cloneObject } from '../utils/Helpers';
+import useQuery from '../utils/hooks/useQuery';
 
 // Styled Components
 const Wrap = styled.div`
@@ -146,19 +146,19 @@ const Form = ({ login, register, handleLogin, handleRegister, match }) => {
     let schemaOutput = {};
 
     if (type === 'books') {
-      schemaOutput = cloneObject(bookSchema);
+      schemaOutput = cloneObject(bookFormSchema);
     }
 
     if (type === 'employees') {
-      schemaOutput = cloneObject(employeesSchema);
+      schemaOutput = cloneObject(employeesFormSchema);
     }
 
     if (login) {
-      schemaOutput = cloneObject(loginSchema);
+      schemaOutput = cloneObject(loginFormSchema);
     }
 
     if (register) {
-      schemaOutput = cloneObject(registrationSchema);
+      schemaOutput = cloneObject(registrationFormSchema);
     }
 
     if (id !== 'new' && !login && !register) {
@@ -209,18 +209,23 @@ const Form = ({ login, register, handleLogin, handleRegister, match }) => {
 
     formOutput = (
       <form onSubmit={onSubmit}>
-        {formElementsArray.map(({ id: elementId, config }) => (
-          <Input
-            key={elementId}
-            elementType={config.elementType}
-            elementConfig={config.elementConfig}
-            value={config.value}
-            invalid={!config.valid}
-            shouldValidate={config.validation}
-            touched={config.touched}
-            changed={(event) => changeHandler(event, elementId)}
-          />
-        ))}
+        {formElementsArray.map(
+          ({
+            id: elementId,
+            config: { elementType, elementConfig, value, valid, validation, touched },
+          }) => (
+            <Input
+              key={elementId}
+              elementType={elementType}
+              elementConfig={elementConfig}
+              value={value}
+              invalid={!valid}
+              shouldValidate={validation}
+              touched={touched}
+              changed={(event) => changeHandler(event, elementId)}
+            />
+          ),
+        )}
         <ButtonCont>
           {!login && !register && (
             <Button

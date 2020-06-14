@@ -3,16 +3,16 @@ import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import axios, { setHeaders } from './api/axios-smartbooks';
-import Error from './components/Error/Error';
-import Auth from './containers/Auth/Auth';
-import Dashboard from './containers/Dashboard/Dashboard';
-import Form from './containers/Form/Form';
-import Table from './containers/Table/Table';
-import UserContext from './contexts/UserContext/UserContext';
-import Layout from './hoc/Layout/Layout';
-import ProtectedRoute from './hoc/ProtectedRoute/ProtectedRoute';
-import GlobalStyle from './styles/Global';
-import Theme from './styles/Theme';
+import Error from './components/Error';
+import Auth from './pages/Auth';
+import Dashboard from './pages/Dashboard';
+import Form from './pages/Form';
+import Table from './pages/Table';
+import UserContext from './utils/contexts/UserContext';
+import Layout from './utils/hoc/Layout';
+import ProtectedRoute from './utils/hoc/ProtectedRoute';
+import GlobalStyle from './utils/styles/Global';
+import Theme from './utils/styles/Theme';
 
 const App = () => {
   const [userData, setUserData] = useState({

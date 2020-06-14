@@ -3,9 +3,9 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
-import axios, { setHeaders } from '../../api/axios-smartbooks';
-import UserContext from '../../contexts/UserContext/UserContext';
-import Form from '../Form/Form';
+import axios, { setHeaders } from '../api/axios-smartbooks';
+import UserContext from '../utils/contexts/UserContext';
+import Form from './Form';
 
 const ErrorMessage = styled.p`
   text-align: center;

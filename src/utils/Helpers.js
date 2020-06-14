@@ -1,3 +1,7 @@
+/**
+ * Reformat datetime to readable format.
+ * @param {Date} inputDateTime
+ */
 const formatDateTime = (inputDateTime) => {
   const date = new Date(inputDateTime);
   const year = date.getFullYear(inputDateTime);
@@ -7,6 +11,10 @@ const formatDateTime = (inputDateTime) => {
   return `${day}.${month}.${year}`;
 };
 
+/**
+ * Deep clone object to prevent mutability.
+ * @param {Object} object
+ */
 const cloneObject = (object) => {
   return JSON.parse(JSON.stringify(object));
 };

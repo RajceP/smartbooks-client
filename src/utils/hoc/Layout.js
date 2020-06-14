@@ -2,7 +2,7 @@ import React from 'react';
 
 import styled from 'styled-components';
 
-import Toolbar from '../../components/Toolbar/Toolbar';
+import Toolbar from '../../components/Toolbar';
 
 const StyledMain = styled.main`
   width: 100%;
