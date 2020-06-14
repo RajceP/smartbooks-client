@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Redirect, Route } from 'react-router-dom';
 
-const ProtectedRoute = ({ component: Component, auth, ...rest }) => {
+const WidthProtectedRoute = ({ component: Component, auth, ...rest }) => {
   return (
     <Route
       {...rest}
@@ -30,4 +30,4 @@ const ProtectedRoute = ({ component: Component, auth, ...rest }) => {
   );
 };
 
-export default ProtectedRoute;
+export default WidthProtectedRoute;

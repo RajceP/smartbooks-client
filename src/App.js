@@ -9,8 +9,8 @@ import Dashboard from './pages/Dashboard';
 import Form from './pages/Form';
 import Table from './pages/Table';
 import UserContext from './utils/contexts/UserContext';
-import Layout from './utils/hoc/Layout';
-import ProtectedRoute from './utils/hoc/ProtectedRoute';
+import WithLayout from './utils/hoc/withLayout';
+import WidthProtectedRoute from './utils/hoc/withProtectedRoute';
 import GlobalStyle from './utils/styles/Global';
 import Theme from './utils/styles/Theme';
 
@@ -58,17 +58,17 @@ const App = () => {
       <UserContext.Provider value={{ userData, setUserData }}>
         <Theme>
           <GlobalStyle />
-          <Layout>
+          <WithLayout>
             <Switch>
-              <ProtectedRoute path="/" component={Dashboard} auth={userData.auth} exact />
+              <WidthProtectedRoute path="/" component={Dashboard} auth={userData.auth} exact />
               <Route path="/login" render={(props) => <Auth {...props} type="login" />} />
               <Route path="/register" render={(props) => <Auth {...props} type="register" />} />
-              <ProtectedRoute path="/dashboard" component={Dashboard} auth={userData.auth} />
-              <ProtectedRoute path="/table/:type" component={Table} auth={userData.auth} />
-              <ProtectedRoute path="/form/:type" component={Form} auth={userData.auth} />
+              <WidthProtectedRoute path="/dashboard" component={Dashboard} auth={userData.auth} />
+              <WidthProtectedRoute path="/table/:type" component={Table} auth={userData.auth} />
+              <WidthProtectedRoute path="/form/:type" component={Form} auth={userData.auth} />
               <Route render={() => <Error>Ouch, nothing to see here...</Error>} />
             </Switch>
-          </Layout>
+          </WithLayout>
         </Theme>
       </UserContext.Provider>
     </BrowserRouter>

@@ -17,7 +17,7 @@ const StyledMain = styled.main`
   }
 `;
 
-const Layout = ({ children }) => {
+const WithLayout = ({ children }) => {
   return (
     <>
       <Toolbar>Smart Books</Toolbar>
@@ -26,4 +26,4 @@ const Layout = ({ children }) => {
   );
 };
 
-export default Layout;
+export default WithLayout;
