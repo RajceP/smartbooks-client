@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
+import moment from 'moment';
 import { useHistory, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -7,7 +8,7 @@ import axios from '../api/axios-smartbooks';
 import Button from '../components/UI/Button/Button';
 import Input from '../components/UI/Input/Input';
 import {
-  bookFormSchema, employeesFormSchema, loginFormSchema, registrationFormSchema,
+  bookFormSchema, customerFormSchema, loginFormSchema, registrationFormSchema,
 } from '../utils/constants/FormsSchemas';
 import { cloneObject } from '../utils/Helpers';
 import useQuery from '../utils/hooks/useQuery';
@@ -149,8 +150,12 @@ const Form = ({ login, register, handleLogin, handleRegister, match }) => {
       schemaOutput = cloneObject(bookFormSchema);
     }
 
-    if (type === 'employees') {
-      schemaOutput = cloneObject(employeesFormSchema);
+    if (type === 'customers') {
+      schemaOutput = cloneObject(customerFormSchema);
+
+      if (id === 'new') {
+        schemaOutput.formSchema.createdAt.value = moment().format('YYYY-MM-DDTHH:mm');
+      }
     }
 
     if (login) {
@@ -167,6 +172,12 @@ const Form = ({ login, register, handleLogin, handleRegister, match }) => {
           schemaOutput.formSchema[key].value = state[key];
           schemaOutput.formSchema[key].valid = true;
         }
+      }
+
+      if (type === 'customers') {
+        schemaOutput.formSchema.createdAt.value = moment(
+          schemaOutput.formSchema.createdAt.value,
+        ).format('YYYY-MM-DDTHH:mm');
       }
     }
 

@@ -108,7 +108,7 @@ const Header = ({ children }) => {
                 <StyledLink to="/table/books">Books</StyledLink>
               </Li>
               <Li>
-                <StyledLink to="/table/employees">Employees</StyledLink>
+                <StyledLink to="/table/customers">Customers</StyledLink>
               </Li>
             </Ul>
           </Nav>

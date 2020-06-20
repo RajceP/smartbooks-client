@@ -83,26 +83,13 @@ const bookFormSchema = {
   formIsValid: false,
 };
 
-const employeesFormSchema = {
+const customerFormSchema = {
   formSchema: {
     name: {
       elementType: 'input',
       elementConfig: {
         type: 'text',
         placeholder: 'Name',
-      },
-      value: '',
-      validation: {
-        required: true,
-      },
-      valid: false,
-      touched: false,
-    },
-    age: {
-      elementType: 'input',
-      elementConfig: {
-        type: 'number',
-        placeholder: 'Age',
       },
       value: '',
       validation: {
@@ -136,6 +123,20 @@ const employeesFormSchema = {
       },
       valid: false,
       touched: false,
+    },
+    createdAt: {
+      elementType: 'input',
+      elementConfig: {
+        type: 'datetime-local',
+        placeholder: 'Created at',
+        disabled: true,
+      },
+      value: '',
+      validation: {
+        required: true,
+      },
+      valid: true,
+      touched: true,
     },
   },
   formIsValid: false,
@@ -222,4 +223,4 @@ const registrationFormSchema = {
   formIsValid: false,
 };
 
-export { bookFormSchema, employeesFormSchema, loginFormSchema, registrationFormSchema };
+export { bookFormSchema, customerFormSchema, loginFormSchema, registrationFormSchema };

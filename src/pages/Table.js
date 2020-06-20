@@ -8,7 +8,7 @@ import DeleteButton from '../assets/images/delete.png';
 import EditButton from '../assets/images/edit.png';
 import TableSkeleton from '../components/TableSkeleton';
 import Button from '../components/UI/Button/Button';
-import { bookTableSchema, employeesTableSchema } from '../utils/constants/TablesSchemas';
+import { bookTableSchema, customerTableSchema } from '../utils/constants/TablesSchemas';
 
 const Wrap = styled.div`
   display: flex;
@@ -91,8 +91,8 @@ const Table = () => {
     columns = [...bookTableSchema, ...columns];
   }
 
-  if (type === 'employees') {
-    columns = [...employeesTableSchema, ...columns];
+  if (type === 'customers') {
+    columns = [...customerTableSchema, ...columns];
   }
 
   let tableOutput = <p>Loading...</p>;
@@ -104,7 +104,7 @@ const Table = () => {
         <ButtonCont>
           <Button type="button" clicked={handleAdd}>
             {type === 'books' && 'Add book'}
-            {type === 'employees' && 'Add employee'}
+            {type === 'customers' && 'Add customer'}
           </Button>
         </ButtonCont>
       </>

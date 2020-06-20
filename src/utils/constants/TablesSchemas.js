@@ -15,18 +15,14 @@ const bookTableSchema = [
   {
     Header: 'Published',
     accessor: 'published',
-    Cell: ({ value }) => <>{moment(value).format('L')}</>,
+    Cell: ({ value }) => <>{moment(value).format('YYYY-MM-DD')}</>,
   },
 ];
 
-const employeesTableSchema = [
+const customerTableSchema = [
   {
     Header: 'Name',
     accessor: 'name',
-  },
-  {
-    Header: 'Age',
-    accessor: 'age',
   },
   {
     Header: 'Address',
@@ -36,6 +32,11 @@ const employeesTableSchema = [
     Header: 'Phone',
     accessor: 'phone',
   },
+  {
+    Header: 'Created at',
+    accessor: 'createdAt',
+    Cell: ({ value }) => <>{moment(value).format('YYYY-MM-DD')}</>,
+  },
 ];
 
-export { bookTableSchema, employeesTableSchema };
+export { bookTableSchema, customerTableSchema };

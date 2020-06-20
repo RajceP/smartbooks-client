@@ -19,6 +19,12 @@ const StyledInput = styled.input`
       color: red;
     }
   }
+
+  :disabled {
+    color: #aaa;
+    border-bottom: 1px solid #aaa;
+    cursor: not-allowed;
+  }
 `;
 
 const StyledLabel = styled.label`
